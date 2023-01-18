@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description">
+    <meta name="author" >
+    <title>Ajout film manuel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  </head>
+  <body>
+<!-- Navbar -->
+    <div class="container">
+      <div class="header clearfix">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Grégory Video Library</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <!-- choix vidéothèques -->
+                  <div class="container">
+                    <div class="container">  
+                      <div class="col-md-8 offset-md-2">
+                        <button class="btn btn-outline-success my-2 my-sm-0" onclick="window.location.href='http://10.11.5.97:8000';">Retour aux choix des vidéothèques</button>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <!-- retour à la vidéothèque -->
+                  <div class="container">
+                    <div class="container">  
+                      <div class="col-md-8 offset-md-2">
+                        <!--Videotheque est la variable en cours, elle n'a pas été modifiée-->
+                        <button class="btn btn-outline-success my-2 my-sm-0" onclick="window.location.href='http://10.11.5.97:8000/index';">Retour à la vidéothèque</button>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+        </div>
+      </nav>
+    </div>
+
+<!-- formulaire d'ajout-->
+<div class="container">
+    <div class="container">
+        <p>Il n'est pas nécessaire de remplir tous les champs</p>
+        <form action="modifyMovieValidate" method="post">  
+            <label for="title">Titre:</label>
+            <input type="text" id="title" name="title" value="{{title}}"><br>
+            <label for="date">Date:</label>
+            <input type="text" id="date" name="date" value="{{date}}"><br>
+            <p>Réalisateur :</p>
+            <label for="directorN">Nom:</label>
+            <input type="text" id="directorN" name="directorN" value="{{director['name']}}"><br>
+            <label for="directorP">Prénom:</label>
+            <input type="text" id="directorP" name="directorP" value="{{director['surname']}}"><br>
+            <lu>
+                <p>Acteurs (Maximum 5):</p>
+                    <li><label for="actorN1">Nom1:</label>
+                        <label for="actorP1">Prénom1:</label>
+                    {% if actors|length>0 %}
+                      <input type="text" id="actorN1" name="actorN1" value="{{actors[0]['name']}}">
+                      <input type="text" id="actorP1" name="actorP1" value="{{actors[0]['surname']}}">
+                    {% else %}
+                      <input type="text" id="actorN1" name="actorN1">
+                      <input type="text" id="actorP1" name="actorP1">
+                    {% endif %}
+                    </li> 
+                    <li><label for="actorN2">Nom2:</label>
+                        <label for="actorP2">Prénom2:</label>
+                    {% if actors|length>1 %}
+                      <input type="text" id="actorN2" name="actorN2" value="{{actors[1]['name']}}">
+                      <input type="text" id="actorP2" name="actorP2" value="{{actors[1]['surname']}}">
+                    {% else %}
+                      <input type="text" id="actorN2" name="actorN2">
+                      <input type="text" id="actorP2" name="actorP2">
+                    {% endif %}
+                    </li>
+                    <li><label for="actorN3">Nom3:</label>
+                        <label for="actorP3">Prénom3:</label>
+                    {% if actors|length>2 %}
+                      <input type="text" id="actorN3" name="actorN3" value="{{actors[2]['name']}}">
+                      <input type="text" id="actorP3" name="actorP3" value="{{actors[2]['surname']}}">
+                    {% else %}
+                      <input type="text" id="actorN3" name="actorN3">
+                      <input type="text" id="actorP3" name="actorP3">
+                    {% endif %}
+                    </li>
+                    <li><label for="actorN4">Nom4:</label>
+                        <label for="actorP4">Prénom4:</label>
+                    {% if actors|length>3 %}
+                      <input type="text" id="actorN4" name="actorN4" value="{{actors[3]['name']}}">
+                      <input type="text" id="actorP4" name="actorP4" value="{{actors[3]['surname']}}">
+                    {% else %}
+                      <input type="text" id="actorN4" name="actorN4">
+                      <input type="text" id="actorP4" name="actorP4">
+                    {% endif %}
+                    </li>
+                    <li><label for="actorN5">Nom5:</label>
+                        <label for="actorP5">Prénom5:</label>
+                    {% if actors|length>4 %}
+                      <input type="text" id="actorN5" name="actorN5" value="{{actors[4]['name']}}">
+                      <input type="text" id="actorP5" name="actorP5" value="{{actors[4]['surname']}}">
+                    {% else %}
+                      <input type="text" id="actorN5" name="actorN5">
+                      <input type="text" id="actorP5" name="actorP5">
+                    {% endif %}
+                    </li>
+                      
+            </lu>
+            <label for="note">Note /10:</label>
+            <input type="text" id="note" name="note" value="{{note}}"><br>
+            <label for="imgUrl">ImgUrl:</label>
+            <input type="text" id="imgUrl" name="imgUrl" value="{{imgUrl}}"><br>
+            <label for="synopsis">Synopsis:</label>
+            <textarea id="synopsis" name="synopsis" rows="5" cols="33">{{synopsis}}</textarea><br>
+            <div>
+              <input type="text" name="submit_data" value="{{title}}" hidden>
+              <button class="btn btn-primary" type="submit" style="color:white;background-color: orange;">Modifier le film de la vidéothèque</button> 
+            </div>
+          </form>
+    </div>           
+</div>
+<br><br><br>
+
+
+<!-- Footer -->
+    <div class="container">
+      <footer class="footer">
+        <p>© Gregory 2022<br></p>
+      </footer>
+
+    </div>
+<!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!-- Custom JS-->
+    <script>
+      
+    </script>
+  </body>
+</html>
