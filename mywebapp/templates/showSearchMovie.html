@@ -63,14 +63,22 @@
                   <img class="card-img-top" src="{{item['imgUrl']}}" alt="Image not available" style="width:250px">
                 </div>
                 <div>
+                  {% if 'title' in item %}
                   <h2>{{item['title']}}</h2>
+                  {% endif %}
+                  {% if 'date' in item %}
                   <p class="mb-0">{{item['date']}}</p>
+                  {% endif %}
                   <h6>Director : </h6>
+                  {% if 'director' in item %}
                   <p>{{item['director']['name']}} {{item['director']['surname']}}</nav></p>
+                  {% endif %}
                   <h6>Actors</h6>
+                  {% if 'actors' in item %}
                   {% for actor in item['actors'] %}
                   <p>{{actor['name']}} {{actor['surname']}}</p>
                   {% endfor %}
+                  {% endif %}
                   <form action="showMovieRecherche">
                     <input type="text" name="submit_data" value="{{item['title']}}" hidden>
                     <button class="btn btn-primary" type="submit">Accéder à la fiche</button>

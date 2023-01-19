@@ -7,7 +7,8 @@ app = Flask(__name__)
 dictionnaire = None #va contenir le contenu json de la vidéothèque
 dictionnaireRecherche = None #va contenir le contenu json de la recherche OMDB
 videotheque = None #va contenir le nom du fichier de la vidéothèque
-url='http://10.11.5.97:5000' #URL du serveur contenant l'API
+#url='http://127.0.0.1:5000' #URL du serveur contenant l'API, version locale
+url='http://10.11.5.97:5000'
 
 #page pour visualiser toutes les vidéotheques dispo
 @app.route('/', methods=["GET"])
@@ -119,19 +120,21 @@ def showMovieRecherche():
     global dictionnaire
     movie = str(request.args['submit_data'])
     for item in dictionnaireRecherche:
-        if (item["title"] == movie):
-            title = item["title"]
-            director = item["director"]  
-            synopsis = item["synopsis"]
-            actors = item["actors"] 
-            imgUrl = item["imgUrl"]
-            date = item["date"]
-            note = item["note"]   
-            #Sending data
-            return render_template('showSearchMovieDetail.html',item=item,title=title,director=director,synopsis=synopsis, actors=actors,imgUrl=imgUrl,date=date,note=note)
-        else:
-            print("Passage au film suivant...")
-    return render_template('index.html',dictionnaire=dictionnaire)
+        if("title" in item):
+            if (item["title"] == movie):
+                title = item["title"]
+                director = item["director"]  
+                synopsis = item["synopsis"]
+                actors = item["actors"] 
+                imgUrl = item["imgUrl"]
+                date = item["date"]
+                note = item["note"]   
+                #Sending data
+                return render_template('showSearchMovieDetail.html',item=item,title=title,director=director,synopsis=synopsis, actors=actors,imgUrl=imgUrl,date=date,note=note)
+            else:
+                print("Passage au film suivant...")
+    dictionnaireRecherche=None #remise à 0 nécessaire si rien trouvé
+    return render_template('alerte.html',dictionnaire=dictionnaire)
 
 @app.route('/addMovieOMDB',methods=["POST","GET"])
 def addMovieOMDB():
@@ -154,6 +157,7 @@ def addMovieOMDB():
         r=requests.put(urlLocale,headers=headers,json=donnees)
     urlLocale=url+'/videotheque'
     dictionnaire=json.loads(requests.get(urlLocale,data={"nameVideo":videotheque}).content)
+    dictionnaireRecherche=None #remise à 0 nécessaire
     return render_template('index.html', dictionnaire=dictionnaire)
 
 #supprimer un film de la vidéothèque
@@ -264,4 +268,4 @@ def modifyMovieValidate():
     return render_template('index.html', dictionnaire=dictionnaire)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='8080')
+    app.run(host='0.0.0.0', port='8000', debug=True)

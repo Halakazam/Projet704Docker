@@ -404,7 +404,6 @@ class FilmVideotheque(Resource):
         date = str(request.form['date'])
         #Query to the database
         data = omdb.get(title=nameFilm,year=date,fullplot=True, tomatoes=True)
-        print(data)
         #Getting data
         if(data=={}):
             return({"titre":"NONE"})
@@ -539,7 +538,6 @@ class RechercheFilm(Resource):
         videoName=abort_if_videotheque_doesnt_exist(nameVideo)
         title=donnees['title']
         datas = omdb.search(title,fullplot=True, tomatoes=True)
-        print(datas)
         #Getting data
         if(datas==[]):
             return({"titre":"NONE"})
@@ -597,4 +595,4 @@ api.add_resource(RechercheFilm,'/videotheque/recherche')
 
 #main
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+    app.run(host='0.0.0.0', port='5000',debug=True)
